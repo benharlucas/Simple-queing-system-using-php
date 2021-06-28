@@ -5,17 +5,21 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Transaction Queuing System</title>
+  <title>Admin | Transaction Queuing System</title>
  	
 
 <?php
-include 'header.php'
+	session_start();
+  if(!isset($_SESSION['login_id']))
+    header('location:login.php');
+ include('./header.php'); 
+ // include('./auth.php'); 
  ?>
 
 </head>
 <style>
 	body{
-        background: #80808045;
+        background: #9E2C00;
   }
   .modal-dialog.large {
     width: 80% !important;
@@ -29,10 +33,10 @@ include 'header.php'
     position: absolute;
     z-index: 999999;
     right: -4.5em;
-    background: unset;
-    color: white;
-    border: unset;
-    font-size: 27px;
+    background: #9E2C00;
+    color: red;
+    border: white;
+    font-size: 60px;
     top: 0;
 }
 #viewer_modal .modal-dialog {
@@ -42,8 +46,8 @@ include 'header.php'
     max-height: unset;
 }
   #viewer_modal .modal-content {
-       background: black;
-    border: unset;
+       background: white;
+    border: white;
     height: calc(100%);
     display: flex;
     align-items: center;
@@ -56,14 +60,16 @@ include 'header.php'
 </style>
 
 <body>
+	<?php include 'topbar.php' ?>
+	<?php include 'navbar.php' ?>
   <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-body text-white">
     </div>
   </div>
-  <main id="" class="mt-4 mb-4" >
-      
-  	 <?php $page = isset($_GET['page']) ? $_GET['page'] :'home'; ?>
-    <?php include $page.'.php' ?>
+  <main id="view-panel" >
+      <?php $page = isset($_GET['page']) ? $_GET['page'] :'home'; ?>
+  	<?php include $page.'.php' ?>
+  	
 
   </main>
 

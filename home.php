@@ -1,38 +1,69 @@
-<?php include 'admin/db_connect.php' ?>
-<div class="container">
-	<div class="col-lg-25">
-		<div class="card bg-dark">
-			<div class="card-body">
-				<h3 class="text-center text-warning"><b>Welcome to Registrar Queuing Management System</b></h3>
-			</div>
-		</div>
-		<div class="card mt-4">
-			<div class="card-body">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-md-8">
-							<a href="index.php?page=queue_registration" class="btn btn btn-warning btn-sm col-md-8 float-right"><b>Go to Queue Registration</b> <i class="fa fa-angle-right">
-							</i></a>
-						</div>
-					</div>
-					<hr>
-					<h4 class="text-center text-dark"><b>Select Customer Queue Serving Display</b></h4>
-					<hr class="divider">
-					<div class="row">
+<?php include 'db_connect.php' ?>
+<style>
+   
+</style>
 
-						<?php 
-						$trans = $conn->query("SELECT * FROM transactions where status = 1 order by name asc");
-							while($row=$trans->fetch_assoc()):
-						?>
-						<div class="col-md-4 mt-4">
-						<a href="index.php?page=display&id=<?php echo $row['id'] ?>" class="btn btn btn-warning btn-block "><?php echo ucwords($row['name']); ?> <i class="fa fa-angle-right">
-							</i></a>
-						</div>
-					<?php endwhile; ?>
-						
-					</div>
-				</div>
-			</div>
+<div class="containe-fluid">
+
+	<div class="row">
+		<div class="col-lg-12">
+			
 		</div>
 	</div>
+
+	<div class="row mt-3 ml-3 mr-3">
+			<div class="col-lg-12">
+    			<div class="card">
+    				<div class="card-body">
+    				<?php echo "Welcome back ". $_SESSION['login_name']."!"  ?>
+    									
+    				</div>
+    				<hr>
+    				
+    		      </div>
+                </div>
+	</div>
+<hr>
+<?php if($_SESSION['login_type'] == 2): ?>
+<?php 
+
+?>
+<script>
+    function queueNow(){
+            $.ajax({
+                url:'ajax.php?action=update_queue',
+                success:function(resp){
+                    resp = JSON.parse(resp)
+                    $('#sname').html(resp.data.name)
+                    $('#squeue').html(resp.data.queue_no)
+                    $('#window').html(resp.data.wname)
+                }
+            })
+    }
+</script>
+<div class="row">
+    <div class="col-md-4 text-center">
+        <a href="javascript:void(0)" class="btn btn-warning" onclick="queueNow()"><b>Next Serve</b></a>
+    </div>
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-header bg-dark text-warning"><h3 class="text-center"><b>Now Serving</b></h3></div>
+            <div class="card-body">
+                <h4 class="text-center" id="sname"></b></h4>
+                <hr class="divider">
+                <h3 class="text-center" id="squeue"></h3>
+                <hr class="divider">
+                <h5 class="text-center" id="window"></h5>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<?php endif; ?>
+
+
+</div>
+<script>
+	
+</script>
